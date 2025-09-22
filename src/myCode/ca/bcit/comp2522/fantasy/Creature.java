@@ -30,7 +30,7 @@ public class Creature
         return health > 0;
     }
 
-    public void takDamage(int damage)
+    public void takeDamage(int damage)
     {
         if (damage < 0)
         {
