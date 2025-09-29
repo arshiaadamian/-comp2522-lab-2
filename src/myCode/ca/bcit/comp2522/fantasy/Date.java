@@ -2,40 +2,46 @@ package ca.bcit.comp2522.fantasy;
 
 /**
  * Represents a Date with year, month, and day.
+ * Provides validation to ensure dates are not in the future
+ * relative to the current year and month.
  *
- * @author Indy
+ *
+ * @author Sukhraj, Arshia, Rodrick, Abdullah
  * @version 1.0
  */
 public class Date {
-    // Instance variables
+    /** The year of the date. */
     private final int year;
+
+    /** The month of the date. */
     private final int month;
+
+    /** The day of the month. */
     private final int day;
 
-    // Constants
+    /** Maximum allowed year. */
     public static final int MAX_YEAR = 2025;
+
+    /** The current month used for validation. */
     public static final int CURRENT_MONTH = 9;
 
     /**
-     * Constructs a Date object with validation.
+     * Constructs a Date object with the specified year, month, and day.
+     * Validates that the year and month are not in the future.
      *
-     * @param year
-     * @param month
-     * @param day
-     * @throws IllegalArgumentException if the date is invalid
+     * @param year the year of the date
+     * @param month the month of the date (1-12)
+     * @param day the day of the month (1-31)
+     * @throws IllegalArgumentException if the year or month is in the future
      */
     public Date(final int year, final int month, final int day) {
-        //validation
-        if (year > MAX_YEAR)
-        {
+        if (year > MAX_YEAR) {
             throw new IllegalArgumentException("Year can not be in the future");
         }
-        if (year == MAX_YEAR && month > CURRENT_MONTH)
-        {
+        if (year == MAX_YEAR && month > CURRENT_MONTH) {
             throw new IllegalArgumentException("Month can not be in the future");
         }
 
-        // Save values after validation
         this.year = year;
         this.month = month;
         this.day = day;
@@ -60,7 +66,7 @@ public class Date {
     }
 
     /**
-     * Returns the day of the month for this date.
+     * Returns the day of this date.
      *
      * @return the day as an int
      */
@@ -69,12 +75,11 @@ public class Date {
     }
 
     /**
-     * Returns the date in YYYY-MM-DD format.
+     * Returns the date in the format YYYY-MM-DD.
      *
-     * @return the date as a String
+     * @return the formatted date as a String
      */
     public String getYYYYMMDD() {
         return String.format("%04d-%02d-%02d", year, month, day);
     }
-
 }
