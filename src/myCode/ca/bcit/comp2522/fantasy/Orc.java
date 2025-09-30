@@ -12,6 +12,18 @@ public class Orc extends Creature {
     /** The rage level of the Orc. */
     private int rage;
 
+    /** Amount rage increases per berserk. */
+    private static final int RAGE_INCREASE = 5;
+
+    /** Rage threshold that causes self-damage. */
+    private static final int MAX_SAFE_RAGE = 20;
+
+    /** Self-damage when rage exceeds threshold. */
+    private static final int SELF_DAMAGE = 30;
+
+    /** Minimum rage required to berserk. */
+    private static final int MIN_RAGE = 5;
+
     /**
      * Constructs an Orc with a name, date of birth, health, and initial rage.
      *
@@ -29,9 +41,6 @@ public class Orc extends Creature {
         this.rage = rage;
     }
 
-    /**
-     * Prints the details of the Orc, including inherited creature details and rage.
-     */
     @Override
     public void getDetails() {
         super.getDetails();
@@ -39,17 +48,17 @@ public class Orc extends Creature {
     }
 
     /**
-     * Increases the Orc's rage by 5. If rage exceeds 20, the Orc takes 30 damage.
-     * Throws an exception if rage is below 5.
+     * Increases the Orc's rage by a fixed amount. If rage exceeds MAX_SAFE_RAGE,
+     * the Orc takes SELF_DAMAGE. Throws an exception if rage is below MIN_RAGE.
      *
-     * @throws LowRageException if rage is below 5
+     * @throws LowRageException if rage is below MIN_RAGE
      */
     public void berserk() {
-        rage += 5;
-        if (rage > 20) {
-            super.takeDamage(30);
-        } else if (rage < 5) {
-            throw new LowRageException("Rage cannot be below 5");
+        rage += RAGE_INCREASE;
+        if (rage > MAX_SAFE_RAGE) {
+            super.takeDamage(SELF_DAMAGE);
+        } else if (rage < MIN_RAGE) {
+            throw new LowRageException("Rage cannot be below " + MIN_RAGE);
         }
     }
 }
